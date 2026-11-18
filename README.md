@@ -110,11 +110,11 @@ iam-guard/
 
 ---
 
-## ⚙️ Planned Capabilities
+## ⚙️ Capabilities
 
-The following capabilities are part of the development direction:
+AWS identity-based IAM policy parsing is implemented for V1. The following
+analysis capabilities remain planned:
 
-- IAM policy JSON parsing.
 - Detection of risky permission configurations.
 - Identification of overly broad access.
 - Analysis of potentially dangerous actions.
@@ -126,21 +126,21 @@ The following capabilities are part of the development direction:
 
 ## 🚧 Development Status
 
-**Current stage: Initial architecture established.**
-
-The initial project structure has been created and merged into the main branch.
-
-The analysis engines and their functionality are still under development.
+**Current stage: AWS identity-based policy parser V1 implemented; analysis engines are under development.**
 
 | Component | Status |
 |---|---|
 | Project structure | ✅ Created |
-| Policy parser | ⏳ Planned |
+| AWS identity-based policy parser | ✅ Implemented |
+| Automated parser tests | ✅ Implemented |
 | Security analysis engine | ⏳ Planned |
 | Intent analysis engine | ⏳ Planned |
 | Decision engine | ⏳ Planned |
 | Reporting system | ⏳ Planned |
-| Automated tests | ⏳ Planned |
+
+The parser entry point is `iam_guard.parser.policy_parser.parse_policy(raw_json)`. It validates JSON syntax (including duplicate keys), supported identity-based policy structure, and field types, then returns normalized `ParsedPolicy` data in a `ParseResult`. Run its standard-library tests with `python3 -m unittest discover -s tests`.
+
+The parser does not perform complete AWS IAM semantic validation, evaluate effective permissions, or determine whether a policy is safe or usable in production. It does not connect to AWS or analyze developer intent.
 
 ---
 
@@ -149,7 +149,7 @@ The analysis engines and their functionality are still under development.
 - **Python** – Core implementation language.
 - **AWS IAM** – Identity and access management policy domain.
 - **Git & GitHub** – Version control and collaboration.
-- **pytest** – Planned testing framework.
+- **Python standard-library unittest** – Automated parser tests.
 
 ---
 
